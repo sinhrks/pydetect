@@ -4,3 +4,4 @@
 from pydetect.changepoint import (MeanDetector, VarianceDetector,  # noqa
                                   MeanVarianceDetector)            # noqa
 import pydetect.datasets as datasets                               # noqa
+from pydetect.outlier import GESDDetector, TimeSeriesGESDDetector  # noqa

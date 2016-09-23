@@ -30,7 +30,7 @@ write_version_py(filename=version_file)
 
 setup(name=PACKAGE,
       version=VERSION,
-      description='Change point and annomaly detector for time-series',
+      description='Change point and anomaly detector for time-series',
       long_description=read(README),
       author='sinhrks',
       author_email='sinhrks@gmail.com',

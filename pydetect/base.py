@@ -5,6 +5,9 @@ import numpy as np
 import pandas as pd
 
 
+# ToDo: maybe needs generic detector and time series detector?
+
+
 class BaseDetector(object):
 
     def detect(self):
@@ -30,7 +33,7 @@ class BaseDetector(object):
         return result
 
 
-class AnomalyDetector(BaseDetector):
+class OutlierDetector(BaseDetector):
     pass
 
 
