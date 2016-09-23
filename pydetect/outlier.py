@@ -5,7 +5,7 @@ from __future__ import division
 
 import numpy as np
 from scipy.stats import t, zscore
-import statsmodels.api as sm
+import pandas as pd
 
 from pydetect.base import OutlierDetector
 
@@ -19,6 +19,15 @@ class GESDDetector(OutlierDetector):
     def __init__(self, alpha=0.05, max_outliers=None):
         self.alpha = 0.05
         self.max_outliers = None
+
+    def detect(self, data):
+        data = self._validate(data)
+
+        indexer, _, _ = self.get_statistics(data)
+        result = np.zeros(len(data))
+        result[indexer] = 1
+        result = self._wrap_result(data, result)
+        return result
 
     def _get_lambda(self, n, i):
         # because of the loop condition, original formula's i
@@ -84,7 +93,17 @@ class GESDDetector(OutlierDetector):
 
 class TimeSeriesGESDDetector(GESDDetector):
 
-    def get_statistics(self, data):
-        res = sm.tsa.seasonal_decompose(data)
-        resid = res.resid
-        return super(TimeSeriesGESDDetector, self).get_statistics(resid)
+    def detect(self, data):
+        import statsmodels.api as sm
+
+        decomposed = sm.tsa.seasonal_decompose(data)
+        resid = decomposed.resid
+
+        notnull_indexer = pd.notnull(resid.values)
+        resid = resid[notnull_indexer]
+
+        indexer, _, _ = self.get_statistics(resid)
+        result = np.zeros(len(data))
+        result[notnull_indexer] = indexer
+        result = self._wrap_result(data, result)
+        return result

@@ -21,4 +21,9 @@ Generalized ESD Test
 
 - ``GESDDetector``
 
-see http://www.itl.nist.gov/div898/handbook/eda/section3/eda35h3.htm
+  see http://www.itl.nist.gov/div898/handbook/eda/section3/eda35h3.htm
+
+- ``TimeSeriesGESDDetector``
+
+  decompose time-series to trend, seasonal and residuals. Then perform
+  generalized ESD test to residuals.

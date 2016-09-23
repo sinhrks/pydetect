@@ -10,7 +10,7 @@ import pandas as pd
 
 class BaseDetector(object):
 
-    def detect(self):
+    def detect(self, data):
         raise NotImplementedError
 
     def get_statistics(self, data):
