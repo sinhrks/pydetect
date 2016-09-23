@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # coding: utf-8
 
+from __future__ import division
+
 import numpy as np
 from scipy.stats import t, zscore
 import statsmodels.api as sm
@@ -27,7 +29,7 @@ class GESDDetector(OutlierDetector):
         # Critical value
         critical = t.ppf(p, df=df)
         lambda_i = (((n - i - 1) * critical) /
-                   (np.sqrt((df + critical ** 2) * (n - i))))
+                    (np.sqrt((df + critical ** 2) * (n - i))))
         return lambda_i
 
     def get_statistics(self, data):
@@ -60,7 +62,7 @@ class GESDDetector(OutlierDetector):
             l.append(lambda_i)
 
             if np.isnan(r_i) or np.isnan(lambda_i):
-                break;
+                break
             elif r_i > lambda_i:
                 n_outliers = i + 1
 
@@ -78,7 +80,6 @@ class GESDDetector(OutlierDetector):
         outliers = (outliers != 0) & (outliers <= n_outliers)
 
         return outliers, np.array(r), np.array(l)
-
 
 
 class TimeSeriesGESDDetector(GESDDetector):
