@@ -33,7 +33,7 @@ class VarianceDetector(SingleChangePointDetector):
 
         n = len(data)
         x = np.cumsum((data - mu) ** 2)
-        null = n * np.log(x[-1]/n)
+        null = n * np.log(x[-1] / n)
 
         denom = np.arange(1, n + 1)
         denom_rev = n - denom

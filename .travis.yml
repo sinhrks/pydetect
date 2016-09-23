@@ -24,7 +24,7 @@ script:
   - export PATH="$HOME/miniconda/bin:$PATH"
   - source activate myenv
   - python -m nose --with-coverage --cover-package=pydetect
-  - flake8 --ignore E501 pydetect
+  - flake8 pydetect
 
 after_success:
   - if [ "$COVERAGE" ]; then
