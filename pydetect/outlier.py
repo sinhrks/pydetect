@@ -5,7 +5,6 @@ from __future__ import division
 
 import numpy as np
 from scipy.stats import t, zscore
-import pandas as pd
 
 from pydetect.base import OutlierDetector
 
@@ -16,9 +15,10 @@ class GESDDetector(OutlierDetector):
     http://www.itl.nist.gov/div898/handbook/eda/section3/eda35h3.htm
     """
 
-    def __init__(self, alpha=0.05, max_outliers=None):
-        self.alpha = 0.05
-        self.max_outliers = None
+    def __init__(self, alpha=0.05, max_outliers=None, decompose=False):
+        self.alpha = alpha
+        self.max_outliers = max_outliers
+        super(GESDDetector, self).__init__(decompose=decompose)
 
     def detect(self, data):
         data = self._validate(data)
@@ -89,21 +89,3 @@ class GESDDetector(OutlierDetector):
         outliers = (outliers != 0) & (outliers <= n_outliers)
 
         return outliers, np.array(r), np.array(l)
-
-
-class TimeSeriesGESDDetector(GESDDetector):
-
-    def detect(self, data):
-        import statsmodels.api as sm
-
-        decomposed = sm.tsa.seasonal_decompose(data)
-        resid = decomposed.resid
-
-        notnull_indexer = pd.notnull(resid.values)
-        resid = resid[notnull_indexer]
-
-        indexer, _, _ = self.get_statistics(resid)
-        result = np.zeros(len(data))
-        result[notnull_indexer] = indexer
-        result = self._wrap_result(data, result)
-        return result
