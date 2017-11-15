@@ -24,8 +24,8 @@ class GESDDetector(OutlierDetector):
         data = self._validate(data)
 
         indexer, _, _ = self.get_statistics(data)
-        result = np.zeros(len(data))
-        result[indexer] = 1
+        result = np.zeros(len(data), dtype=bool)
+        result[indexer] = True
         result = self._wrap_result(data, result)
         return result
 
@@ -55,8 +55,8 @@ class GESDDetector(OutlierDetector):
         # number of outliers
         n_outliers = 0
 
-        r = []
-        l = []
+        right = []
+        left = []
 
         for i in range(max_outliers):
             # s must be sample standard deviation
@@ -66,9 +66,8 @@ class GESDDetector(OutlierDetector):
 
             lambda_i = self._get_lambda(n, i)
 
-            # ToDo: ?
-            r.append(r_i)
-            l.append(lambda_i)
+            right.append(r_i)
+            left.append(lambda_i)
 
             if np.isnan(r_i) or np.isnan(lambda_i):
                 break
@@ -88,4 +87,4 @@ class GESDDetector(OutlierDetector):
 
         outliers = (outliers != 0) & (outliers <= n_outliers)
 
-        return outliers, np.array(r), np.array(l)
+        return outliers, np.array(right), np.array(left)

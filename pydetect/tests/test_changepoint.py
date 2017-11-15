@@ -4,10 +4,12 @@ import pydetect
 
 import numpy as np
 import pandas as pd
+
+import unittest
 import pandas.util.testing as tm
 
 
-class TestMeanDetector(tm.TestCase):
+class TestMeanDetector(unittest.TestCase):
 
     def test_nile_statistics(self):
         nile = pydetect.datasets.get_nile()
@@ -42,7 +44,7 @@ class TestMeanDetector(tm.TestCase):
         tm.assert_numpy_array_equal(res, exp.values)
 
 
-class TestVarianceDetector(tm.TestCase):
+class TestVarianceDetector(unittest.TestCase):
 
     def test_nile(self):
         nile = pydetect.datasets.get_nile()
@@ -77,7 +79,7 @@ class TestVarianceDetector(tm.TestCase):
         tm.assert_numpy_array_equal(res, exp.values)
 
 
-class TestMeanVarianceDetector(tm.TestCase):
+class TestMeanVarianceDetector(unittest.TestCase):
 
     def test_nile(self):
         nile = pydetect.datasets.get_nile()
