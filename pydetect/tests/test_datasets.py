@@ -3,10 +3,11 @@
 import pydetect
 
 import pandas as pd
-import pandas.util.testing as tm
+
+import unittest
 
 
-class TestDatasets(tm.TestCase):
+class TestDatasets(unittest.TestCase):
 
     def test_nile(self):
         nile = pydetect.datasets.get_nile()

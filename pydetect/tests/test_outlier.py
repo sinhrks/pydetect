@@ -4,10 +4,12 @@ import pydetect
 
 import numpy as np
 import pandas as pd
+
+import unittest
 import pandas.util.testing as tm
 
 
-class TestGeneralizedESD(tm.TestCase):
+class TestGeneralizedESD(unittest.TestCase):
 
     def test_sample(self):
         """
@@ -40,6 +42,7 @@ class TestGeneralizedESD(tm.TestCase):
 
         d = pydetect.GESDDetector(alpha=0.05)
         res = d.detect(data)
+        print(res)
         tm.assert_numpy_array_equal(res, exp)
 
     def test_decompose(self):
