@@ -42,7 +42,6 @@ class TestGeneralizedESD(unittest.TestCase):
 
         d = pydetect.GESDDetector(alpha=0.05)
         res = d.detect(data)
-        print(res)
         tm.assert_numpy_array_equal(res, exp)
 
     def test_decompose(self):
